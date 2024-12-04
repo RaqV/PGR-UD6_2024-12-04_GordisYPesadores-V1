@@ -17,10 +17,10 @@ import java.util.Set;
 
 import javax.swing.text.html.HTMLDocument.Iterator;
 
-import clases.Estadistica;
 import clases.Gordi;
 import clases.Persona;
 import clases.Pesador;
+import utilidades.Estadistica;
 import utilidades.UtilidadesPanel;
 
 public class ControlPeso {

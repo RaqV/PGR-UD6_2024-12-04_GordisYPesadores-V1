@@ -10,7 +10,6 @@ import utilidades.UtilidadesPanel;
 
 public class Gordi extends Persona{
 	
-	
 	//Atributos
 	private String codigo;
 	private float altura;
@@ -22,7 +21,7 @@ public class Gordi extends Persona{
 		this.mediciones = new ArrayList<>();
 	}
 
-	//Métodos
+	//Mï¿½todos
 	public String getCodigo() {
 		return codigo;
 	}
@@ -51,9 +50,12 @@ public class Gordi extends Persona{
 		super.setDatos();
 		
 		this.altura=UtilidadesPanel.leerFloat("Introduce la altura");
-		//Genero el código
+		//Genero el cï¿½digo
 		this.codigo=this.getNombre().substring(0, 2).toUpperCase()+ "-" + Integer.toString(getFecNacimiento().getYear()).substring(2, 4);	
 	
+		//Se muestra el cÃ³digo
+		System.out.println("El cÃ³digo del Gordi es: "+ codigo);
+		
 		//Pido las mediciones, por lo menos 1
 		setMediciones();
 	}
@@ -67,7 +69,7 @@ public class Gordi extends Persona{
 			nueva = new Medicion();
 			nueva.setDatos();
 			mediciones.add(nueva);
-			mas=UtilidadesPanel.esBoolean("¿Quieres introducir más mediciones: ");
+			mas=UtilidadesPanel.esBoolean("ï¿½Quieres introducir mï¿½s mediciones: ");
 		}while(mas);
 	}
 	
@@ -87,7 +89,7 @@ public class Gordi extends Persona{
 		try {
 			imc=mediciones.get(mediciones.size()-1).getPeso()/(altura*altura);	
 		}catch(ArithmeticException e) {
-			System.out.println("Error: División por cero"+e.getMessage());
+			System.out.println("Error: Divisiï¿½n por cero"+e.getMessage());
 		}
 		return imc;
 	}
@@ -97,7 +99,7 @@ public class Gordi extends Persona{
 		try {
 			imc=peso/(altura*altura);	
 		}catch(ArithmeticException e) {
-			System.out.println("Error: División por cero"+e.getMessage());
+			System.out.println("Error: Divisiï¿½n por cero"+e.getMessage());
 		}
 		return imc;
 	}
@@ -117,7 +119,7 @@ public class Gordi extends Persona{
 //			if (imc == Float.POSITIVE_INFINITY || imc== Float.NEGATIVE_INFINITY)
 //				throw new ArithmeticException();
 //		}catch(ArithmeticException e) {
-//			System.out.println("Error: División por cero ");
+//			System.out.println("Error: Divisiï¿½n por cero ");
 //		}
 		return imc;
 	}
@@ -130,7 +132,7 @@ public class Gordi extends Persona{
 			if (imc == Float.POSITIVE_INFINITY || imc== Float.NEGATIVE_INFINITY)
 				throw new ArithmeticException();
 		}catch(ArithmeticException e) {
-			System.out.println("Error: División por cero"+e.getMessage());
+			System.out.println("Error: Divisiï¿½n por cero"+e.getMessage());
 		}
 		return imc;
 	}
@@ -151,20 +153,20 @@ public class Gordi extends Persona{
 	
 	public void obtenerFicha() {
 		float imcAnt=0, imcAc=0, dif=0;
-		System.out.println("Año nac.   Altura");
+		System.out.println("Aï¿½o nac.   Altura");
 		System.out.println(super.getFecNacimiento().getYear()+"   "+this.altura);
-		imcAnt=obtenerUltimoPeso();   //Guardo el último peso para calcular la diferencia
+		imcAnt=obtenerUltimoPeso();   //Guardo el ï¿½ltimo peso para calcular la diferencia
 		System.out.println("Mediciones: ");
 		getMedicionesListado();
 		introducirNuevoPeso();
 		imcAc=obtenerUltimoPeso(); 
 		System.out.printf("IMC ACTUAL=%.2f %n", calcularIMC());
 		dif=imcAc-imcAnt;
-		System.out.printf("Diferencia peso última medición: %+.2f kg %n", dif);
+		System.out.printf("Diferencia peso ï¿½ltima mediciï¿½n: %+.2f kg %n", dif);
 		imcAnt=obtenerPrimerPeso(); 
 		System.out.printf("Diferencia peso desde el inicio del tratamiento: %+.2f kg %n", (imcAc-imcAnt));
 		if (dif>0.200) {
-			System.out.println("REVISIÓN DE LA DIETA!!!!");
+			System.out.println("REVISIï¿½N DE LA DIETA!!!!");
 		}else {
 			System.out.println("LA DIETA ASIGNADA ES CORRECTA");
 		}

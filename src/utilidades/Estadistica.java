@@ -1,4 +1,4 @@
-package clases;
+package utilidades;
 
 public class Estadistica {
 	//Atributos
@@ -23,7 +23,7 @@ public class Estadistica {
 		this.cuantos = 0;
 	}
 	
-	//Métodos
+	//Mï¿½todos
 	public float getIndiceInf() {
 		return indiceInf;
 	}
