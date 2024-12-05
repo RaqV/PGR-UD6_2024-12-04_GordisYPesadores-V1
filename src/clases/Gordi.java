@@ -6,8 +6,6 @@ import java.util.List;
 
 import utilidades.UtilidadesPanel;
 
-
-
 public class Gordi extends Persona{
 	
 	//Atributos
@@ -51,7 +49,7 @@ public class Gordi extends Persona{
 		
 		this.altura=UtilidadesPanel.leerFloat("Introduce la altura");
 		//Genero el c�digo
-		this.codigo=this.getNombre().substring(0, 2).toUpperCase()+ "-" + Integer.toString(getFecNacimiento().getYear()).substring(2, 4);	
+		this.codigo=getNombre().substring(0, 2).toUpperCase()+ "-" + Integer.toString(getFecNacimiento().getYear()).substring(2, 4);	
 	
 		//Se muestra el código
 		System.out.println("El código del Gordi es: "+ codigo);
