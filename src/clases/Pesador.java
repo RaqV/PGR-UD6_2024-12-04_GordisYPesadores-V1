@@ -2,7 +2,7 @@ package clases;
 
 import java.time.LocalDate;
 
-import utilidades.UtilidadesPanel;
+import utilidades.Utilidades;
 
 
 
@@ -17,7 +17,7 @@ public class Pesador extends Persona{
 	//Constructor
 	
 	
-	//Métodos
+	//Mï¿½todos
 	public LocalDate getFecAlta() {
 		return fecAlta;
 	}
@@ -28,7 +28,7 @@ public class Pesador extends Persona{
 	
 	public void setDatos(){
 		super.setDatos();
-		this.fecAlta=UtilidadesPanel.pidoFechaDMA("Introduce la fecha de alta en la empresa");
+		this.fecAlta=Utilidades.pidoFechaDMA("Introduce la fecha de alta en la empresa");
 	}
 
 	@Override

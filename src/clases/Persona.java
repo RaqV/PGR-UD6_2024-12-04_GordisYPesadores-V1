@@ -4,7 +4,7 @@ package clases;
 import java.time.LocalDate;
 import java.time.Period;
 
-import utilidades.UtilidadesPanel;
+import utilidades.Utilidades;
 
 public class Persona{
 	
@@ -33,8 +33,9 @@ public class Persona{
 	}
 	
 	public void setDatos() {
-		this.nombre=UtilidadesPanel.introducirCadena("Introduce el nombre: ");
-		this.fecNacimiento=UtilidadesPanel.pidoFechaDMA("Introduce la fecha de nacimiento ");
+		this.nombre=Utilidades.introducirCadena("Introduce el nombre: ");
+		this.fecNacimiento=Utilidades.pidoFechaDMA("Introduce la fecha de nacimiento en formato dd-mm-aaaa: ");
+	    
 	}
 	
 	public int calcularEdad() {

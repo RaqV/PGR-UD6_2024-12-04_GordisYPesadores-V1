@@ -3,7 +3,7 @@ package clases;
 import java.io.Serializable;
 import java.time.LocalDate;
 
-import utilidades.UtilidadesPanel;
+import utilidades.Utilidades;
 
 
 
@@ -19,7 +19,7 @@ public class Medicion {
 	//Constructores
 	
 	
-	//Métodos
+	//Mï¿½todos
 	public LocalDate getFecha() {
 		return fecha;
 	}
@@ -34,8 +34,8 @@ public class Medicion {
 	}
 	
 	public void setDatos() {
-		this.fecha=UtilidadesPanel.pidoFechaDMA("Introduce la fecha del pesaje");
-		this.peso=UtilidadesPanel.leerFloat("Introduce el peso en Kilogramos: ");
+		this.fecha=Utilidades.pidoFechaDMA("Fecha nueva mediciÃ³n en formato: dd-mm-aaaa:");
+		this.peso=Utilidades.leerFloat("Introduce el peso en Kilogramos: ");
 	}
 
 }

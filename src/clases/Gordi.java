@@ -1,22 +1,22 @@
 package clases;
 
 import java.time.LocalDate;
-import java.util.ArrayList;
-import java.util.List;
+import java.util.Map;
+import java.util.TreeMap;
 
-import utilidades.UtilidadesPanel;
+import utilidades.Utilidades;
 
-public class Gordi extends Persona{
+public class Gordi extends Persona implements Comparable<Gordi>{
 	
 	//Atributos
 	private String codigo;
 	private float altura;
-	private List<Medicion> mediciones;
+	private TreeMap<LocalDate,Medicion> mediciones;
 
 	//Constructores
 	
 	public Gordi() {
-		this.mediciones = new ArrayList<>();
+		this.mediciones = new TreeMap<LocalDate, Medicion>();
 	}
 
 	//M�todos
@@ -36,18 +36,18 @@ public class Gordi extends Persona{
 		this.altura = altura;
 	}
 
-	public List<Medicion> getMediciones() {
+	public Map<LocalDate, Medicion> getMediciones() {
 		return mediciones;
 	}
 
-	public void setMediciones(List<Medicion> mediciones) {
+	public void setMediciones(TreeMap<LocalDate, Medicion> mediciones) {
 		this.mediciones = mediciones;
 	}
 
 	public void setDatos() {
 		super.setDatos();
 		
-		this.altura=UtilidadesPanel.leerFloat("Introduce la altura");
+		this.altura=Utilidades.leerFloat("Introduce la altura");
 		//Genero el c�digo
 		this.codigo=getNombre().substring(0, 2).toUpperCase()+ "-" + Integer.toString(getFecNacimiento().getYear()).substring(2, 4);	
 	
@@ -66,15 +66,15 @@ public class Gordi extends Persona{
 		do {
 			nueva = new Medicion();
 			nueva.setDatos();
-			mediciones.add(nueva);
-			mas=UtilidadesPanel.esBoolean("�Quieres introducir m�s mediciones: ");
+			mediciones.put(nueva.getFecha(),nueva);
+			mas=Utilidades.esBoolean("�Quieres introducir m�s mediciones: ");
 		}while(mas);
 	}
 	
 	public void getMedicionesListado() {
 		//Pido las mediciones, por lo menos 1
 
-		for(Medicion pm:mediciones) {
+		for(Medicion pm:mediciones.values()) {
 			System.out.println(pm.getFecha()+"   "+pm.getPeso());
 		}
 	}
@@ -105,20 +105,22 @@ public class Gordi extends Persona{
 	public float calcularIMC() {
 		float imc=0;
 		
-		if (altura==0) {
-			imc=-1;
-		}else {
-			imc=mediciones.get(mediciones.size()-1).getPeso()/(altura*altura);	
-		}
-		
-//		try {
+//		if (altura==0) {
+//			imc=-1;
+//		}else {
 //			imc=mediciones.get(mediciones.size()-1).getPeso()/(altura*altura);	
-//			
+//		}
+		
+		try {
+			Map.Entry<LocalDate, Medicion> ultima = mediciones.lastEntry();
+			imc=ultima.getValue().getPeso()/(altura*altura);	
+			
 //			if (imc == Float.POSITIVE_INFINITY || imc== Float.NEGATIVE_INFINITY)
 //				throw new ArithmeticException();
-//		}catch(ArithmeticException e) {
-//			System.out.println("Error: Divisi�n por cero ");
-//		}
+		}catch(ArithmeticException e) {
+			System.out.println("Error: Divisi�n por cero ");
+			return -1;
+		}
 		return imc;
 	}
 	
@@ -136,33 +138,35 @@ public class Gordi extends Persona{
 	}
 	
 	public float obtenerUltimoPeso() {
-		return mediciones.get(mediciones.size()-1).getPeso();
+		Map.Entry<LocalDate, Medicion> ultimo = mediciones.lastEntry();
+		return ultimo.getValue().getPeso()/(altura*altura);	
 	}
 	
 	public float obtenerPrimerPeso() {
-		return mediciones.get(0).getPeso();
+		Map.Entry<LocalDate, Medicion> primero = mediciones.firstEntry();
+		return primero.getValue().getPeso()/(altura*altura);	
 	}
 	
 	public void introducirNuevoPeso() {
 		Medicion nueva = new Medicion();
 		nueva.setDatos();
-		mediciones.add(nueva);
+		mediciones.put(nueva.getFecha(),nueva);
 	}
 	
 	public void obtenerFicha() {
-		float imcAnt=0, imcAc=0, dif=0;
+		float pesoAnt=0, pesoAc=0, dif=0;
 		System.out.println("A�o nac.   Altura");
-		System.out.println(super.getFecNacimiento().getYear()+"   "+this.altura);
-		imcAnt=obtenerUltimoPeso();   //Guardo el �ltimo peso para calcular la diferencia
+		System.out.println(getFecNacimiento().getYear()+"   "+this.altura);
+		pesoAnt=obtenerUltimoPeso();   //Guardo el �ltimo peso para calcular la diferencia
 		System.out.println("Mediciones: ");
 		getMedicionesListado();
 		introducirNuevoPeso();
-		imcAc=obtenerUltimoPeso(); 
+		pesoAc=obtenerUltimoPeso(); 
 		System.out.printf("IMC ACTUAL=%.2f %n", calcularIMC());
-		dif=imcAc-imcAnt;
+		dif=pesoAc-pesoAnt;
 		System.out.printf("Diferencia peso �ltima medici�n: %+.2f kg %n", dif);
-		imcAnt=obtenerPrimerPeso(); 
-		System.out.printf("Diferencia peso desde el inicio del tratamiento: %+.2f kg %n", (imcAc-imcAnt));
+		pesoAnt=obtenerPrimerPeso(); 
+		System.out.printf("Diferencia peso desde el inicio del tratamiento: %+.2f kg %n", (pesoAc-pesoAnt));
 		if (dif>0.200) {
 			System.out.println("REVISI�N DE LA DIETA!!!!");
 		}else {
@@ -175,6 +179,15 @@ public class Gordi extends Persona{
 		super.toString();
 		return "Gordi [codigo=" + codigo + ", altura=" + altura + ", mediciones=" + mediciones + "]";
 	}
+
+	@Override
+//	public int compareTo(Gordi otroGordi) {
+//		
+//		return super.getNombre().compareTo(otroGordi.getNombre());
+//	}
 	
-	
+	public int compareTo(Gordi otroGordi) {
+		
+		return Float.compare(altura, otroGordi.getAltura());
+	}
 }
